@@ -38,6 +38,33 @@ def cabecera():
     )
 
 
+import requests
+
+
+def get_file_content(file_id):
+    """Obtiene el contenido de un archivo de Google Drive.
+
+    Args:
+      file_id: El ID del archivo de Google Drive.
+
+    Returns:
+      El contenido del archivo de Google Drive.
+    """
+
+    url = "https://www.googleapis.com/drive/v3/files/{file_id}/content".format(
+        file_id=file_id
+    )
+    print("url is", url)
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        return response.content
+    else:
+        print(
+            "Error al obtener el contenido del archivo: {}".format(response.status_code)
+        )
+
+
 def input_message():
     return input("Introduce el mensajito: ")
 
@@ -51,8 +78,12 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == "__main__":
     cabecera()
-    print_hi("")
-    mensaje = input_message()
-    print("Bueno el hash del mensaje", mensaje, "es", hash(mensaje))
+    # print_hi("")
+    # mensaje = input_message()
+    # print("Bueno el hash del mensaje", mensaje, "es", hash(mensaje))
+    file_id = "1ez1fJvGC5L_Zf0S8AY_GqtHJu3mo-IYh"
 
+    content = get_file_content(file_id)
+
+    print(content)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
